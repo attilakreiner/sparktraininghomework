@@ -82,7 +82,8 @@ class HomeworkSpec extends FunSpec with BeforeAndAfterAll {
     describe("when predicting temperature for a given day") {
       it("it should return a temperature based on all observed dates including previous and next days") {
         val actual = Homework.predictTemperature(sc.parallelize(CLIMATE_DATA), 1, 2)
-        val expected = -4.377777777777776
+//        val expected = -4.377777777777776
+        val expected = -4.377777777777777
         assert(actual === expected)
       }
     }
