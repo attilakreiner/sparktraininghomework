@@ -100,16 +100,23 @@ object Homework {
   //    sum / count
   //  }
 
+//  def predictTemperature(climateData: RDD[Climate], month: Int, dayOfMonth: Int): Double = {
+//    val (sum, count) = climateData
+//      .filter(climate => isMonthAndDayEqualOrAdjacent(climate.observationDate, month, dayOfMonth))
+//      .map(data => (data.meanTemperature.value, 1))
+//      .reduce(addTuples)
+//    sum / count
+//  }
+
   def predictTemperature(climateData: RDD[Climate], month: Int, dayOfMonth: Int): Double = {
-    val (sum, count) = climateData
+    climateData
       .filter(climate => isMonthAndDayEqualOrAdjacent(climate.observationDate, month, dayOfMonth))
-      .map(data => (data.meanTemperature.value, 1))
-      .reduce(addTuples)
-    sum / count
+      .map(data => data.meanTemperature.value)
+      .mean()
   }
 
-  private def addTuples(tuple1: (Double, Int), tuple2: (Double, Int)): (Double, Int) =
-    (tuple1._1 + tuple2._1, tuple1._2 + tuple2._2)
+//  private def addTuples(tuple1: (Double, Int), tuple2: (Double, Int)): (Double, Int) =
+//    (tuple1._1 + tuple2._1, tuple1._2 + tuple2._2)
 
   private def isMonthAndDayEqual(date: LocalDate, month: Int, dayOfMonth: Int): Boolean =
     date.getMonth.getValue == month && date.getDayOfMonth == dayOfMonth
